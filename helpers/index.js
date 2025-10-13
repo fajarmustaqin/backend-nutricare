@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config({ path: "./.env" });
-const { SECRETKEY } = process.env;
+const { JWT_SECRET } = process.env;
+const SECRETKEY = JWT_SECRET || 'nutziverse_default_secret';
 const generateToken = (data) => {
 	const token = jwt.sign({ data }, SECRETKEY, {
 		expiresIn: "1h",
@@ -19,7 +20,7 @@ const verifyToken = (req, res, next) => {
 			res.end();
 		}
 	} catch (error) {
-		res.status(500).send("error");
+		res.status(500).send("error token");
 		res.end();
 	}
 };

@@ -6,6 +6,30 @@ const loginByGoogle = require("../helpers/google.auth");
 const registerByGoogle = require("../helpers/google.auth");
 
 class UsersController {
+	// Get all users (Admin only)
+	static async getAllUsers(req, res) {
+		try {
+			const users = await UsersModel.find(
+				{}, 
+				{ 
+					nama: 1, 
+					no_hp: 1, 
+					email: 1, 
+					kondisiMedis: 1, 
+					nomorRekamMedis: 1,
+					kamarRawat: 1,
+					kaloriYgDibutuhkan: 1,
+					jeniskelamin: 1,
+					umur: 1,
+					createdAt: 1
+				}
+			).sort({ createdAt: -1 });
+			
+			res.status(200).send(users);
+		} catch (error) {
+			res.status(500).send({ err: error.message });
+		}
+	}
 	static async registerUser(req, res) {
 		try {
 			let {
@@ -43,9 +67,9 @@ class UsersController {
 				};
 				let bmr = 0;
 				if (jeniskelamin === "laki-laki") {
-					bmr = 665 + 13.7 * berat + 5 * tinggi - 6.8 * umur;
+					bmr = 66.5 + 13.75 * berat + 5.003 * tinggi - 6.75 * umur;
 				} else {
-					bmr = 655 + 9.6 * berat + 1.8 * tinggi - 4.7 * umur;
+					bmr = 655.1 + 9.563 * berat + 1.850 * tinggi - 4.676 * umur;
 				}
 				let kaloriYgDibutuhkan = bmr * aktivitasFisik.nilai;
 				let maxkarbohidrat = kaloriYgDibutuhkan * 0.75;

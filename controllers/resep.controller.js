@@ -13,7 +13,7 @@ class ResepController {
   }
   static async postResep(req, res) {
     try {
-      const { porsi, image, deskripsi, idMakanan } = req.body;
+      const { porsi, image, deskripsi,bahan, waktupenyajian, idMakanan } = req.body;
       const Resep = new ResepModel({
         porsi: porsi,
         image: image,

@@ -8,7 +8,8 @@ const {verifyToken, verifyTokenWithId, allowedAdmin} = require("../helpers")
 
 
 router.post("/login", adminController.loginAdmin)
+router.post("/register", adminController.registerAdmin);
 
 
 
-module.exports = router
+module.exports = router;

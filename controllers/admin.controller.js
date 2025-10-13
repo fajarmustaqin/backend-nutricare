@@ -1,33 +1,49 @@
-const AdminModel = require("../models/admin.model")
-const bcrypt = require("bcrypt")
-const saltRounds = 10
-const {generateToken, dataToken} = require("../helpers")
+const AdminModel = require("../models/admin.model");
+const bcrypt = require("bcrypt");
+const { generateToken } = require("../helpers");
 
-class AdminController { 
-    static async loginAdmin(req, res) {
-        try {
-            let {email, password} = req.body
-            const existAdmin = await AdminModel.findOne({email: email})
-            if(existAdmin !== null){
-                let compare = bcrypt.compareSync(password, existAdmin.password)
-                if(compare){
-                    const tokenAdmin = {
-                        _id: existAdmin._id,
-                        role: "admin"
-                    }
-                    const createToken = generateToken(tokenAdmin)
-                    res.status(200).send({message: "welcome", token: createToken})
-                }else{
-                    res.send('invalid')
-                }
-            }else{
-                res.send('admin not exist')
-            }  
-        } catch (error) {
-            res.status(500).send({err: error})
+const registerAdmin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const existAdmin = await AdminModel.findOne({ email });
+
+        if (existAdmin) {
+            return res.status(400).json('Admin already exists');
         }
-    }    
-}
 
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await AdminModel.create({ email, password: hashedPassword });
 
-module.exports = AdminController
+        res.status(200).json('Admin registered successfully');
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const loginAdmin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const existAdmin = await AdminModel.findOne({ email });
+
+        if (!existAdmin) {
+            return res.status(404).json('Admin not found');
+        }
+
+        const validPassword = await bcrypt.compare(password, existAdmin.password);
+
+        if (!validPassword) {
+            return res.status(401).json('Invalid credentials');
+        }
+
+        const token = generateToken({ _id: existAdmin._id, role: "admin" });
+
+        res.status(200).json({ message: "Welcome, Admin!", token });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = {
+    registerAdmin,
+    loginAdmin,
+};

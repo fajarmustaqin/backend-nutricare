@@ -1,24 +1,26 @@
 {
-  "name": "back-end-nutziverse",
+  "name": "back-end-nutricare",
   "version": "1.0.0",
-  "description": "",
+  "description": "NutriCare Backend API",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "seeder": "node seeders/admin.seeder",
+    "seeder": "node seeders/master.seeder",
+    "seeder:admin": "node seeders/admin.seeder",
+    "seeder:user": "node seeders/user.seeder",
+    "seeder:food": "node seeders/food.seeder",
+    "seeder:resep": "node seeders/resep.seeder",
+    "seeder:weekly": "node seeders/weeklyPlan.seeder",
+    "seeder:disease": "node seeders/diseaseTemplate.seeder",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Nutziverse/back-end-nutziverse.git"
+    "type": "git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Nutziverse/back-end-nutziverse/issues"
-  },
-  "homepage": "https://github.com/Nutziverse/back-end-nutziverse#readme",
+  "bugs": {},
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
@@ -28,9 +30,11 @@
     "google-auth-library": "^7.11.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.3",
-    "mongoose-seed": "^0.6.0"
+    "mongoose-seed": "^0.6.0",
+    "multer": "^2.0.2"
   },
   "devDependencies": {
+    "axios": "^1.12.2",
     "nodemon": "^2.0.15"
   },
   "engines": {

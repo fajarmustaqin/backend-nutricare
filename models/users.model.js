@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
 		},
 		password: {
 			type: String,
-			maxlength: 255,
+			maxlength: 250,
 		},
 		tracking_nutrisi: {
 			type: mongoose.Types.ObjectId,
@@ -48,6 +48,18 @@ const userSchema = new mongoose.Schema(
 		},
 		gizi: {
 			type: Object,
+		},
+		kondisiMedis: {
+			type: String,
+			maxlength: 200,
+		},
+		nomorRekamMedis: {
+			type: String,
+			maxlength: 50,
+		},
+		kamarRawat: {
+			type: String,
+			maxlength: 20,
 		},
 	},
 	{
