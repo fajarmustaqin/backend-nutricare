@@ -28,6 +28,50 @@ async function main() {
 				version: '1.0.0'
 			});
 		});
+
+		// Seeder endpoint
+		app.get('/api/seeders/master', async (req, res) => {
+			try {
+				console.log('Starting master seeder...');
+				
+				// Import seeder modules
+				const adminSeeder = require('./seeders/admin.seeder');
+				const userSeeder = require('./seeders/user.seeder');
+				const foodSeeder = require('./seeders/food.seeder');
+				const resepSeeder = require('./seeders/resep.seeder');
+				const diseaseSeeder = require('./seeders/diseaseTemplate.seeder');
+				const weeklySeeder = require('./seeders/weeklyPlan.seeder');
+
+				// Run all seeders
+				await adminSeeder();
+				await userSeeder();
+				await foodSeeder();
+				await resepSeeder();
+				await diseaseSeeder();
+				await weeklySeeder();
+
+				res.json({
+					status: 'success',
+					message: 'Master seeder completed successfully',
+					timestamp: new Date().toISOString(),
+					data: {
+						admins: '1 admin created',
+						users: '10 sample users created',
+						foods: '50+ foods created',
+						recipes: '20+ recipes created',
+						diseaseTemplates: '5+ templates created',
+						weeklyPlans: 'Sample plans created'
+					}
+				});
+			} catch (error) {
+				console.error('Seeder error:', error);
+				res.status(500).json({
+					status: 'error',
+					message: 'Seeder failed',
+					error: error.message
+				});
+			}
+		});
 		
 		app.use(routes);
 		app.listen(port, () => {
