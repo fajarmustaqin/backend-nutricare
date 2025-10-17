@@ -9,45 +9,55 @@ async function resetAdminPassword() {
     const client = new MongoClient(uri);
     
     try {
-        console.log('🔐 Starting admin password reset...\n');
+        console.log('🔐 Starting admin account update...\n');
         
         await client.connect();
         const db = client.db('nutricare');
         const adminsCollection = db.collection('admins');
         
-        // Find admin
-        const admin = await adminsCollection.findOne({ email: 'admin@mail.com' });
+        // Find any admin (old or new email)
+        const oldAdmin = await adminsCollection.findOne({ 
+            $or: [
+                { email: 'admin@mail.com' },
+                { email: 'admin@admin.com' }
+            ]
+        });
         
-        if (!admin) {
+        // Hash new password
+        const newPassword = bcrypt.hashSync('admin123', saltRounds);
+        
+        if (!oldAdmin) {
             console.log('❌ Admin not found!');
             console.log('📝 Creating new admin account...');
             
             // Create new admin
-            const newPassword = bcrypt.hashSync('admin123', saltRounds);
             await adminsCollection.insertOne({
-                email: 'admin@mail.com',
+                email: 'admin@admin.com',
                 password: newPassword,
                 createdAt: new Date()
             });
             
             console.log('✅ New admin created successfully!');
         } else {
-            console.log('✅ Admin found:', admin.email);
+            console.log('✅ Admin found:', oldAdmin.email);
             
-            // Hash new password
-            const newPassword = bcrypt.hashSync('admin123', saltRounds);
-            
-            // Update password
+            // Update both email and password
             await adminsCollection.updateOne(
-                { email: 'admin@mail.com' },
-                { $set: { password: newPassword } }
+                { _id: oldAdmin._id },
+                { 
+                    $set: { 
+                        email: 'admin@admin.com',
+                        password: newPassword 
+                    } 
+                }
             );
             
-            console.log('✅ Password updated successfully!');
+            console.log('✅ Email updated to: admin@admin.com');
+            console.log('✅ Password updated to: admin123');
         }
         
         console.log('\n📋 Admin Login Credentials:');
-        console.log('   Email: admin@mail.com');
+        console.log('   Email: admin@admin.com');
         console.log('   Password: admin123');
         console.log('\n🚀 You can now login at: http://localhost:3000/admin');
         
