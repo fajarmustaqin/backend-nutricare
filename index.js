@@ -19,6 +19,16 @@ async function main() {
 		// Serve static files (uploaded images)
 		app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 		
+		// Health check endpoint
+		app.get('/api/health', (req, res) => {
+			res.json({
+				status: 'OK',
+				message: 'NutriCare Backend API is running',
+				timestamp: new Date().toISOString(),
+				version: '1.0.0'
+			});
+		});
+		
 		app.use(routes);
 		app.listen(port, () => {
 			console.log(`listening on http://localhost:${port}`);
