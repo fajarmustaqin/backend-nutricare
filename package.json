@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "vercel-build": "echo 'Vercel build completed'",
     "seeder": "node seeders/master.seeder",
     "seeder:admin": "node seeders/admin.seeder",
     "seeder:user": "node seeders/user.seeder",
