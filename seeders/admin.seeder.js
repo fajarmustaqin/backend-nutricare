@@ -23,11 +23,12 @@ async function createSeeder(){
                     });
             });
         } else {
-            console.log('data is exist')
+            console.log('Admin data already exists')
         }
     } catch (error) {
-        console.log(error)
+        console.log('Admin seeder error:', error)
+        throw error
     }
 }
 
-createSeeder()
+module.exports = createSeeder

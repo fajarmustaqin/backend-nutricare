@@ -111,9 +111,8 @@ async function createUserSeeder() {
         
     } catch (error) {
         console.error('❌ User seeder failed:', error);
-    } finally {
-        process.exit(0);
+        throw error;
     }
 }
 
-createUserSeeder();
+module.exports = createUserSeeder;

@@ -296,8 +296,8 @@ async function createDiseaseTemplateSeeder() {
     } catch (error) {
         console.error('❌ Disease template seeder failed:', error);
     } finally {
-        process.exit(0);
+        // process.exit(0); // Removed for Vercel deployment
     }
 }
 
-createDiseaseTemplateSeeder();
+module.exports = createDiseaseTemplateSeeder;

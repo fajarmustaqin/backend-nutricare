@@ -87,8 +87,8 @@ async function createResepSeeder() {
     } catch (error) {
         console.error('❌ Recipe seeder failed:', error);
     } finally {
-        process.exit(0);
+        // process.exit(0); // Removed for Vercel deployment
     }
 }
 
-createResepSeeder();
+module.exports = createResepSeeder;

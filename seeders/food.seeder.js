@@ -142,8 +142,8 @@ async function createFoodSeeder() {
     } catch (error) {
         console.error('❌ Seeder failed:', error);
     } finally {
-        process.exit(0);
+        // process.exit(0); // Removed for Vercel deployment
     }
 }
 
-createFoodSeeder();
+module.exports = createFoodSeeder;

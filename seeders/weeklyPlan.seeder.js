@@ -195,7 +195,7 @@ async function createWeeklyPlanSeeder() {
     } catch (error) {
         console.error('❌ Weekly plan seeder failed:', error);
     } finally {
-        process.exit(0);
+        // process.exit(0); // Removed for Vercel deployment
     }
 }
 
@@ -260,4 +260,4 @@ function getWeekNumber(date) {
     return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 }
 
-createWeeklyPlanSeeder();
+module.exports = createWeeklyPlanSeeder;
