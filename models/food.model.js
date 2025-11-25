@@ -32,10 +32,6 @@ const FoodSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  karbon: {
-    type: Number,
-    required: true
-  },
   porsi: {
     type: String,
     maxlength: 20,

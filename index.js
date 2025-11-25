@@ -11,7 +11,7 @@ async function main() {
 	try {
 		await DBconnection(MONGODB_URI);
 		const app = express();
-		const port = process.env.PORT || 4433;
+		const port = process.env.PORT || 8080;
 		app.use(bodyparser.json());
 		app.use(bodyparser.urlencoded({ extended: false }));
 		app.use(cors());
@@ -20,7 +20,7 @@ async function main() {
 		app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 		
 		// Health check endpoint
-		app.get('/api/health', (req, res) => {
+		app.get('/health', (req, res) => {
 			res.json({
 				status: 'OK',
 				message: 'NutriCare Backend API is running',
@@ -30,7 +30,7 @@ async function main() {
 		});
 
 		// Seeder endpoint
-		app.get('/api/seeders/master', async (req, res) => {
+		app.get('/seeders/master', async (req, res) => {
 			try {
 				console.log('Starting master seeder...');
 				
@@ -38,7 +38,6 @@ async function main() {
 				const adminSeeder = require('./seeders/admin.seeder');
 				const userSeeder = require('./seeders/user.seeder');
 				const foodSeeder = require('./seeders/food.seeder');
-				const resepSeeder = require('./seeders/resep.seeder');
 				const diseaseSeeder = require('./seeders/diseaseTemplate.seeder');
 				const weeklySeeder = require('./seeders/weeklyPlan.seeder');
 
@@ -46,7 +45,6 @@ async function main() {
 				await adminSeeder();
 				await userSeeder();
 				await foodSeeder();
-				await resepSeeder();
 				await diseaseSeeder();
 				await weeklySeeder();
 
@@ -58,7 +56,6 @@ async function main() {
 						admins: '1 admin created',
 						users: '10 sample users created',
 						foods: '50+ foods created',
-						recipes: '20+ recipes created',
 						diseaseTemplates: '5+ templates created',
 						weeklyPlans: 'Sample plans created'
 					}
@@ -73,6 +70,7 @@ async function main() {
 			}
 		});
 		
+		// Use routes without /api prefix (for consistency with existing frontend)
 		app.use(routes);
 		app.listen(port, () => {
 			console.log(`listening on http://localhost:${port}`);

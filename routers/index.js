@@ -18,9 +18,6 @@ try {
     router.use("/profile", ProfileRoute);
     console.log("Loaded profile.router succeesfully");
 
-    const ResepRoute = require(".//resep.router");
-    router.use("/resep", ResepRoute);
-    console.log("Loaded resep.router succeesfully");
 
     const FoodRouter = require("./food.router");
     router.use("/food", FoodRouter);

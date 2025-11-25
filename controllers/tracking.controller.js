@@ -197,10 +197,88 @@ const resetKarbon = async (req, res) => {
   }
 }
 
+// Admin endpoint: Get tracking for specific user by userId
+const getUserTracking = async (req, res) => {
+  const { userId } = req.params
+  
+  console.log('🔍 Admin getUserTracking called with userId:', userId);
+  
+  try {
+    const tracking = await TrackingModel.findOne({userID: userId})
+      .populate({
+        path: 'userID',
+        select: 'nama email'
+      })
+      .populate({
+        path: 'tracking',
+        populate: {
+          path: 'makanan',
+          populate: {
+            path: 'makananID',
+            select: 'makanan kaloriMakanan karbohidrat protein lemak'
+          }
+        }
+      });
+    
+    console.log('📥 Tracking found:', tracking ? 'Yes' : 'No');
+    
+    if (!tracking) {
+      return res.send(null)
+    }
+
+    // Debug: Check if makananID is populated
+    if (tracking.tracking && tracking.tracking.length > 0) {
+      const firstTracking = tracking.tracking[0];
+      if (firstTracking.makanan && firstTracking.makanan.length > 0) {
+        const firstMakanan = firstTracking.makanan[0];
+        console.log('🔍 Sample makanan item:', {
+          hasMakananID: !!firstMakanan.makananID,
+          makananIDType: typeof firstMakanan.makananID,
+          makananIDValue: firstMakanan.makananID,
+          makanan: firstMakanan.makananID?.makanan || 'NOT POPULATED',
+          kaloriMakanan: firstMakanan.makananID?.kaloriMakanan || 'NOT POPULATED'
+        });
+      }
+    }
+
+    res.send(tracking)
+  } catch (error) {
+    console.error('❌ Error in getUserTracking:', error);
+    res.status(500).send({error: error.message})
+  }
+}
+
+// Admin endpoint: Get all users with their tracking data
+const getAllUsersTracking = async (req, res) => {
+  try {
+    const allTracking = await TrackingModel.find()
+      .populate({
+        path: 'userID',
+        select: 'nama email'
+      })
+      .populate({
+        path: 'tracking',
+        populate: {
+          path: 'makanan',
+          populate: {
+            path: 'makananID',
+            select: 'makanan kaloriMakanan karbohidrat protein lemak'
+          }
+        }
+      });
+    
+    res.send(allTracking)
+  } catch (error) {
+    res.status(500).send({error: error.message})
+  }
+}
+
 module.exports = {
   getTracking,
   addTracking,
   todayTracking,
   perDateTracking,
-  resetKarbon
+  resetKarbon,
+  getUserTracking,
+  getAllUsersTracking
 }

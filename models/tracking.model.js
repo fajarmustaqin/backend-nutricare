@@ -27,9 +27,6 @@ const TrackingMakananSchema = new mongoose.Schema({
   }, {_id: false}],
   totKalori: {
     type: Number
-  },
-  totKarbon: {
-    type: Number
   }
 }, {_id: false})
 
@@ -39,14 +36,7 @@ const TrackingSchema = new mongoose.Schema({
     required: true,
     ref: "User"
   },
-  tracking: [TrackingMakananSchema],
-  kendaraan: {
-    type: Number
-  },
-  serapEmisi: {
-    type: Number,
-    default: 0
-  }
+  tracking: [TrackingMakananSchema]
 
 }, opts)
 

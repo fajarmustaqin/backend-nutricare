@@ -12,7 +12,6 @@ const foodData = [
         karbohidrat: 28,
         protein: 2.7,
         lemak: 0.3,
-        karbon: 2.5,
         porsi: "100g",
         penyetaraanPorsi: "1 centong"
     },
@@ -23,7 +22,6 @@ const foodData = [
         karbohidrat: 0,
         protein: 25,
         lemak: 15,
-        karbon: 4.2,
         porsi: "100g",
         penyetaraanPorsi: "1 potong"
     },
@@ -34,7 +32,6 @@ const foodData = [
         karbohidrat: 3.6,
         protein: 2.9,
         lemak: 0.4,
-        karbon: 0.8,
         porsi: "100g",
         penyetaraanPorsi: "1 mangkuk"
     },
@@ -45,7 +42,6 @@ const foodData = [
         karbohidrat: 9,
         protein: 19,
         lemak: 11,
-        karbon: 1.5,
         porsi: "100g",
         penyetaraanPorsi: "2 potong"
     },
@@ -56,7 +52,6 @@ const foodData = [
         karbohidrat: 4,
         protein: 12,
         lemak: 9,
-        karbon: 1.2,
         porsi: "100g",
         penyetaraanPorsi: "3 potong"
     },
@@ -67,7 +62,6 @@ const foodData = [
         karbohidrat: 0,
         protein: 18,
         lemak: 14,
-        karbon: 3.8,
         porsi: "100g",
         penyetaraanPorsi: "1 ekor"
     },
@@ -78,7 +72,6 @@ const foodData = [
         karbohidrat: 15,
         protein: 8,
         lemak: 10,
-        karbon: 2.1,
         porsi: "100g",
         penyetaraanPorsi: "1 porsi"
     },
@@ -89,7 +82,6 @@ const foodData = [
         karbohidrat: 8,
         protein: 22,
         lemak: 20,
-        karbon: 5.5,
         porsi: "100g",
         penyetaraanPorsi: "3 potong"
     },
@@ -100,7 +92,6 @@ const foodData = [
         karbohidrat: 8,
         protein: 12,
         lemak: 4,
-        karbon: 2.8,
         porsi: "100g",
         penyetaraanPorsi: "1 mangkuk"
     },
@@ -111,7 +102,6 @@ const foodData = [
         karbohidrat: 23,
         protein: 1.1,
         lemak: 0.3,
-        karbon: 0.5,
         porsi: "100g",
         penyetaraanPorsi: "1 buah"
     }
